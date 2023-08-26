@@ -7,7 +7,7 @@ import { connectDB } from './config/database';
 import configureSessionStore from './config/session-store';
 import app from './config/express';
 import { AppEnv } from './shared/enums';
-import Swagger from './config/swagger';
+// import Swagger from './config/swagger';
 
 async function main(app: Express): Promise<void> {
   const logger = new Logger(app.name);
@@ -22,15 +22,15 @@ async function main(app: Express): Promise<void> {
   const PORT = Env.get<number>('PORT') || 8080;
   const NODE_ENV = Env.get<string>('NODE_ENV');
 
-  const SWAGGER_ROUTE = Env.get<string>('SWAGGER_ROUTE');
+  // const SWAGGER_ROUTE = Env.get<string>('SWAGGER_ROUTE');
 
-  Swagger(app, PORT, {
-    swaggerDocRoute: SWAGGER_ROUTE,
-    definitionsPath: [
-      NODE_ENV == AppEnv.DEVELOPMENT ? './**/*.ts' : './**/*.js',
-    ],
-    explorer: true,
-  });
+  // Swagger(app, PORT, {
+  //   swaggerDocRoute: SWAGGER_ROUTE,
+  //   definitionsPath: [
+  //     NODE_ENV == AppEnv.DEVELOPMENT ? './**/*.ts' : './**/*.js',
+  //   ],
+  //   explorer: true,
+  // });
 
   NODE_ENV !== AppEnv.PRODUCTION &&
     server.on('listening', () => {

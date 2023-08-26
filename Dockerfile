@@ -1,4 +1,5 @@
-FROM node:16-alpine
+# Use an appropriate base image
+FROM node:18-alpine
 
 WORKDIR /src
 
@@ -10,7 +11,10 @@ COPY . .
 
 RUN npm run build
 
+COPY start.sh .
+RUN chmod +x start.sh
+
 EXPOSE 1089
 
-# Command to start the application
-CMD ["npm", "run", "dev"]
+# Set the entry point
+ENTRYPOINT ["sh", "start.sh"]

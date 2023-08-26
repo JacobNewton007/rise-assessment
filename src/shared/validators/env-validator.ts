@@ -25,6 +25,5 @@ export const envValidatorSchema = Joi.object<EnvProps>({
   PAPERTRAIL_PORT: Joi.string().required(),
   REDIS_SESSION_STORE_URL: Joi.string(),
   JWT_SECRET: Joi.string(),
-  SWAGGER_ROUTE: Joi.string().default('/api/docs'),
   SESSION_SECRET: Joi.string(),
 }).unknown(true);
