@@ -1,0 +1,13 @@
+node_modules
+.env
+dist
+build
+logs
+package-lock.json
+
+#testing
+/coverage
+.nyc_output
+
+yarn.lock
+*.log

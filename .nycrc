@@ -1,0 +1,24 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "reporter": [
+    "lcov",
+    "json",
+    "text",
+    "text-summary",
+    "clover"
+  ],
+  "check-coverage": true,
+  "branches": 60,
+  "lines": 70,
+  "functions": 70,
+  "statements": 70,
+  "exclude": 
+  [
+    "src/config/*.ts",
+    "src/posts/const.ts",
+    "src/shared/services/log_wrapper.ts",
+    "src/shared/utils/watch-async-controller.ts"
+  ]
+}

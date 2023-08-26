@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 1089:1089
+    volumes:
+      - .:/src
+    environment:
+      - PAPERTRAIL_HOST=${PAPERTRAIL_HOST}
+      - PAPERTRAIL_PORT=${PAPERTRAIL_PORT}
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - DEVELOPMENT_DATABASE_URL=${DEVELOPMENT_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
