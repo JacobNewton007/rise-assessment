@@ -32,17 +32,13 @@ describe('Env Class', () => {
     await Env.validateEnv(validationSchema);
 
     expect(Env.get('NODE_ENV')).to.equal('test');
-    expect(Env.get<number>('PORT')).to.equal(
-      Number(process.env.PORT),
-    );
+    expect(Env.get<number>('PORT')).to.equal(Number(process.env.PORT));
   });
 
   it('should fall back to default config for missing variables', async () => {
     await Env.validateEnv(validationSchema);
 
     expect(Env.get('NODE_ENV')).to.equal('test');
-    expect(Env.get<number>('PORT')).to.equal(
-      Number(process.env.PORT),
-    );
+    expect(Env.get<number>('PORT')).to.equal(Number(process.env.PORT));
   });
 });

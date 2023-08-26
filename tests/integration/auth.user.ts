@@ -6,7 +6,6 @@ import app from '../../src/config/express';
 
 const baseUrl = '/api/v1';
 describe('AuthenticationController', () => {
-
   describe('createUser', () => {
     it('should successfully create a user', (done) => {
       request(app)
@@ -23,15 +22,15 @@ describe('AuthenticationController', () => {
           expect(response.body.data).to.be.a('object');
           done();
         });
-    })
-  })
+    });
+  });
   describe('login', () => {
     it('should successfully log in', (done) => {
       const loginPayload = {
         email: 'test@support.com',
         password: 'testSuper1#',
       };
-  
+
       request(app)
         .post(`${baseUrl}/auth/login`)
         .send(loginPayload)
@@ -45,7 +44,7 @@ describe('AuthenticationController', () => {
           done();
         });
     });
-  
+
     it('should handle invalid email', (done) => {
       const loginPayload = {
         email: 'invalid@example.com',
@@ -60,7 +59,7 @@ describe('AuthenticationController', () => {
           done();
         });
     });
-  
+
     it('should handle invalid password', (done) => {
       const loginPayload = {
         email: 'test@support.com',
@@ -75,9 +74,8 @@ describe('AuthenticationController', () => {
           done();
         });
     });
-  })
+  });
 
-    
   describe('getUsers', () => {
     it('should successfully get users', (done) => {
       request(app)
@@ -86,10 +84,12 @@ describe('AuthenticationController', () => {
         .end((_err, response) => {
           expect(response.status).to.equal(StatusCodes.OK);
           expect(response.body.status).to.equal('success');
-          expect(response.body.message).to.equal('Successfully retrieved users');
+          expect(response.body.message).to.equal(
+            'Successfully retrieved users',
+          );
           expect(response.body.data).to.be.a('array');
           done();
         });
-    })
-  })
+    });
+  });
 });

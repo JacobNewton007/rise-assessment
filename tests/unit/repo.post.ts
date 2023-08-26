@@ -2,15 +2,21 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { PostRepositoryImpl } from '../../src/posts/repositories/post.repositories';
 import { CreateNullClass } from '../../src/shared/utils/null-class';
-import { PostEntity, CommentEntity } from '../../src/posts/entities/post.entity';
+import {
+  PostEntity,
+  CommentEntity,
+} from '../../src/posts/entities/post.entity';
 import { BadException } from '../../src/shared/errors';
 import sinon from 'sinon';
 import { SqlQuestWrapper } from './repo.user';
 
-
-
 describe('PostRepositoryImpl', () => {
-  let sqlQuestStub: { callsFake?: any; oneOrNone: any; one: any; manyOrNone: any };
+  let sqlQuestStub: {
+    callsFake?: any;
+    oneOrNone: any;
+    one: any;
+    manyOrNone: any;
+  };
   let postRepository: PostRepositoryImpl;
 
   beforeEach(() => {
@@ -24,8 +30,7 @@ describe('PostRepositoryImpl', () => {
   });
 
   describe('getUsersPosts', () => {
-    it('should return user\'s posts', async () => {
-
+    it("should return user's posts", async () => {
       // Mock data and stub the database response
       const userId = 'user-id';
       const userPosts: PostEntity[] = [
@@ -42,7 +47,7 @@ describe('PostRepositoryImpl', () => {
           content: 'Test Content 2',
           created_at: new Date(),
           updated_at: new Date(),
-        }
+        },
       ];
 
       sqlQuestStub.manyOrNone.resolves(userPosts);
@@ -57,10 +62,10 @@ describe('PostRepositoryImpl', () => {
         FROM posts 
         LEFT JOIN users ON users.id = posts.user_id 
         LEFT JOIN comments ON comments.post_id = posts.id
-        WHERE users.id = $1`, [userId]
+        WHERE users.id = $1`,
+        [userId],
       );
     });
-
   });
 
   describe('getPostByTitle', () => {
@@ -81,7 +86,8 @@ describe('PostRepositoryImpl', () => {
       expect(result).to.deep.equal(postEntity);
       sinon.assert.calledOnceWithExactly(
         sqlQuestStub.oneOrNone,
-        'SELECT * FROM posts WHERE title = $1', [postTitle]
+        'SELECT * FROM posts WHERE title = $1',
+        [postTitle],
       );
     });
 
@@ -90,18 +96,17 @@ describe('PostRepositoryImpl', () => {
       const databaseError = new Error('Database error');
       sqlQuestStub.oneOrNone.rejects(databaseError);
       try {
-      
         await postRepository.getPostByTitle('Test Post');
         expect.fail('Expected an error to be thrown');
-
       } catch (error) {
         expect(error).to.deep.equal(databaseError);
         sinon.assert.calledOnceWithExactly(
           sqlQuestStub.oneOrNone,
-          'SELECT * FROM posts WHERE title = $1', ['Test Post']
-        )
+          'SELECT * FROM posts WHERE title = $1',
+          ['Test Post'],
+        );
       }
-    })
+    });
   });
 
   describe('getTopUserPosts', () => {
@@ -121,8 +126,8 @@ describe('PostRepositoryImpl', () => {
               content: 'Test Comment',
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         },
         {
           id: 'post-id-2',
@@ -142,8 +147,8 @@ describe('PostRepositoryImpl', () => {
               content: 'Test Comment 3',
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
+            },
+          ],
         },
         {
           id: 'post-id-3',
@@ -163,20 +168,19 @@ describe('PostRepositoryImpl', () => {
               content: 'Test Comment 5',
               created_at: new Date(),
               updated_at: new Date(),
-            }
-          ]
-        }
+            },
+          ],
+        },
       ];
-  
+
       sqlQuestStub.manyOrNone.resolves(topUserPosts);
-  
+
       const result = await postRepository.getTopUserPosts();
-  
+
       expect(result).to.deep.equal(topUserPosts);
     });
-
   });
-  
+
   describe('createPost', () => {
     it('should create a post and return the post entity', async () => {
       const postData = {
@@ -185,42 +189,42 @@ describe('PostRepositoryImpl', () => {
         user_id: 'user-id',
         created_at: new Date(),
       };
-  
+
       const createdPost = {
         id: 'post-id',
         ...postData,
       };
-  
+
       // Stub the getPostByTitle method to simulate post not existing
       sqlQuestStub.oneOrNone.resolves(null);
-  
+
       // Stub the SQL query response for creating a post
       sqlQuestStub.one.resolves(createdPost);
-  
+
       const result = await postRepository.createPost(postData);
       expect(result[0]).to.deep.equal(new PostEntity(createdPost));
     });
-  
+
     it('should return null post entity and BadException when post already exists', async () => {
       const existingPostTitle = 'Existing Post';
       const nullPostEntity = CreateNullClass<PostEntity>();
       const badException = new BadException('Post already exist');
-  
+
       // Stub the getPostByTitle method to simulate post already existing
       sqlQuestStub.oneOrNone.resolves({ title: existingPostTitle });
-  
+
       const result = await postRepository.createPost({
         title: existingPostTitle,
         content: 'This is some content.',
         user_id: 'user-id',
       });
-  
+
       expect(result[0]).to.deep.equal(nullPostEntity);
       expect(result[1]).to.deep.equal(badException);
       sinon.assert.notCalled(sqlQuestStub.one); // Ensure no insert query is called
     });
   });
-    
+
   describe('createComment', () => {
     it('should create a comment and return the comment entity', async () => {
       const commentData = {
@@ -229,17 +233,17 @@ describe('PostRepositoryImpl', () => {
         user_id: 'user-id',
         created_at: new Date(),
       };
-  
+
       const createdComment = {
         id: 'comment-id',
         ...commentData,
       };
-  
+
       // Stub the SQL query response for creating a comment
       sqlQuestStub.one.resolves(createdComment);
-  
+
       const result = await postRepository.createComment(commentData);
       expect(result).to.deep.equal(new CommentEntity(createdComment));
     });
-  });  
+  });
 });

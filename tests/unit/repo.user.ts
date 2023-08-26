@@ -7,7 +7,13 @@ import { NotFoundError } from '../../src/shared/errors';
 import sinon from 'sinon';
 
 export class SqlQuestWrapper {
-  constructor(private sqlQuest: { oneOrNone: (arg0: any, arg1: any) => any, one: (arg0: any, arg1: any) => any, manyOrNone: (arg0: any, arg1: any) => any }) {}
+  constructor(
+    private sqlQuest: {
+      oneOrNone: (arg0: any, arg1: any) => any;
+      one: (arg0: any, arg1: any) => any;
+      manyOrNone: (arg0: any, arg1: any) => any;
+    },
+  ) {}
 
   oneOrNone(query: any, args: any) {
     return this.sqlQuest.oneOrNone(query, args);
@@ -19,10 +25,14 @@ export class SqlQuestWrapper {
   manyOrNone(query: any, args: any) {
     return this.sqlQuest.manyOrNone(query, args);
   }
-
 }
 describe('UserRepositoryImpl', () => {
-  let sqlQuestStub: { callsFake?: any; oneOrNone: any; one: any; manyOrNone: any };
+  let sqlQuestStub: {
+    callsFake?: any;
+    oneOrNone: any;
+    one: any;
+    manyOrNone: any;
+  };
   let userRepository: UserRepositoryImpl;
 
   beforeEach(() => {
@@ -49,9 +59,7 @@ describe('UserRepositoryImpl', () => {
 
       sqlQuestStub.oneOrNone.resolves(userEntity);
 
-      const result = await userRepository.getUser(
-        userData.id as any,
-      );
+      const result = await userRepository.getUser(userData.id as any);
       expect(result[0]).to.deep.equal(userEntity);
       expect(result[1]).to.be.null;
     });
@@ -103,12 +111,11 @@ describe('UserRepositoryImpl', () => {
         phone_number: '1234567890',
       };
 
-
       const createdUser = {
         id: 'user-id',
         name: userData.name,
         email: userData.email,
-        phone_number: userData.phone_number
+        phone_number: userData.phone_number,
       };
 
       sqlQuestStub.one.resolves(createdUser);
@@ -139,7 +146,7 @@ describe('UserRepositoryImpl', () => {
           phone_number: '1234567890',
           created_at: new Date(),
           updated_at: new Date(),
-        }
+        },
       ];
 
       sqlQuestStub.manyOrNone.resolves(userList);
@@ -160,11 +167,11 @@ describe('UserRepositoryImpl', () => {
         phone_number: '1234567890',
       };
       const userEntity = new UserEntity(userData);
-  
+
       sqlQuestStub.oneOrNone.resolves(userData);
-  
+
       const result = await userRepository.getUserByEmail(userEmail);
-  
+
       expect(result[0]).to.deep.equal(userEntity);
       expect(result[1]).to.be.null;
       sinon.assert.calledOnceWithExactly(
@@ -173,16 +180,16 @@ describe('UserRepositoryImpl', () => {
         [userEmail],
       );
     });
-  
+
     it('should return null user entity and NotFoundError when user with email does not exist', async () => {
       const nonExistentEmail = 'nonexistent@example.com';
       const nullUserEntity = CreateNullClass<UserEntity>();
       const notFoundError = new NotFoundError('User not found');
-  
+
       sqlQuestStub.oneOrNone.resolves(null);
-  
+
       const result = await userRepository.getUserByEmail(nonExistentEmail);
-  
+
       expect(result[0]).to.deep.equal(nullUserEntity);
       expect(result[1]).to.deep.equal(notFoundError);
       sinon.assert.calledOnceWithExactly(
@@ -191,12 +198,12 @@ describe('UserRepositoryImpl', () => {
         [nonExistentEmail],
       );
     });
-  
+
     it('should handle database error', async () => {
       const databaseError = new Error('Database error');
-  
+
       sqlQuestStub.oneOrNone.rejects(databaseError);
-  
+
       try {
         await userRepository.getUserByEmail('test@example.com');
         // Ensure this line is never reached since the method should throw an error
@@ -210,5 +217,5 @@ describe('UserRepositoryImpl', () => {
         );
       }
     });
-  });  
+  });
 });
