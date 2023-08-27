@@ -15,7 +15,6 @@ async function main(app: Express): Promise<void> {
   // run the following three before initializing App function
   await Env.validateEnv(envValidatorSchema);
   await connectDB();
-  await configureSessionStore();
 
   const server = http.createServer(app);
 
