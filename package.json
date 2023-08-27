@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
-    "postinstall": "tsc",
+    "build": "tsc",
     "dev": "nodemon --exec ts-node ./src/index.ts --mode development",
-    "build:digitalocean": "npm install --production=false && npm run postinstall && npm ci",
+    "build:digitalocean": "npm install --production=false && npm run build && npm ci",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "pretest": "yarn run lint && cross-env NODE_ENV=test yarn run migrate-test:reset && yarn run migrate-test:up",
