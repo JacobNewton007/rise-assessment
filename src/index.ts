@@ -40,4 +40,6 @@ async function main(app: Express): Promise<void> {
   server.listen(PORT);
 }
 
-main(app);
+main(app).catch((err) => {
+  console.error(">>>>>>>>>>>>>>>>>>>>>>", err);
+});
