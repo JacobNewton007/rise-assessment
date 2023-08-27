@@ -7,7 +7,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node ./dist/index.js",
     "postinstall": "tsc",
     "dev": "nodemon --exec ts-node ./src/index.ts --mode development",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
