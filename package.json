@@ -4,7 +4,7 @@
   "license": "UNLICENSED",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node ./src/index.ts --mode development",
     "build:digitalocean": "npm install && npm run build",
@@ -16,6 +16,7 @@
     "test:coverage": "jest --coverage",
     "posttest": "yarn run migrate-test:down",
     "test:e2e": "jest --config ./tests/jest-e2e.json",
+    "prepare": "husky install",
     "migrations": "source .env && db-migrate",
     "migrate:up": "db-migrate up  --config database.json",
     "migrate-test:up": "db-migrate up --config database.json -e test",
