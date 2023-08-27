@@ -16,7 +16,6 @@
     "test:coverage": "jest --coverage",
     "posttest": "yarn run migrate-test:down",
     "test:e2e": "jest --config ./tests/jest-e2e.json",
-    "prepare": "husky install",
     "migrations": "source .env && db-migrate",
     "migrate:up": "db-migrate up  --config database.json",
     "migrate-test:up": "db-migrate up --config database.json -e test",
