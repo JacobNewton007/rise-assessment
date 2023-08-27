@@ -1,9 +1,36 @@
-# template
+# Template
 
 ## Database Migrations
 
-We use db-migrate tool which loads a SQL file to handle creating/editing our db.
-Please reference the [db-migrate docs](https://github.com/db-migrate/node-db-migrate).
-The only difference is that you have to run it via npm script, as `npm run migrations -- <command arguments for db-migrate>`.
+We utilize the `db-migrate` tool, which loads SQL files to facilitate the creation and editing of our database. For detailed information, please consult the [db-migrate documentation](https://github.com/db-migrate/node-db-migrate). The only difference is that you need to execute it via an npm script, using `npm run migrations -- <command arguments for db-migrate>`.
 
-Example `npm run migrations -- create anothermigration --sql-file`
+### Running the Application
+
+To run the application locally:
+1. npm install dependencies
+   
+  ### Migrate the database:
+  ```bash
+  npm run migrate:up
+
+  ### Start the application in development mode:
+   ```bash
+   npm run dev
+
+   ### Testing
+   ```bash
+  npm run test
+
+  ### Docker
+  ```bash
+  docker build -t app-name .
+  docker run -p port:port -d app-name
+
+  ### Database
+
+  ```bash
+  npm run migrations -- create migration-name --sql-file
+
+
+
+ 

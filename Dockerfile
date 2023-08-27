@@ -1,10 +1,12 @@
-# Use an appropriate base image
-FROM node:18-alpine
+FROM node:16
+
+ENV NODE_ENV=development
 
 WORKDIR /src
 
 COPY package*.json ./
 
+# Install npm dependencies
 RUN npm install
 
 COPY . .
@@ -16,5 +18,4 @@ RUN chmod +x start.sh
 
 EXPOSE 1089
 
-# Set the entry point
 ENTRYPOINT ["sh", "start.sh"]

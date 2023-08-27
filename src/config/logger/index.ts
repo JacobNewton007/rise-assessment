@@ -1,6 +1,6 @@
 import Env from '../../shared/utils/env';
 import winston from 'winston';
-import { Papertrail } from 'winston-papertrail';
+// import { Papertrail } from 'winston-papertrail';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
 const logFormat = winston.format.combine(
@@ -39,11 +39,11 @@ const errorLogRotationTransport = new DailyRotateFile({
   extension: '.log',
 });
 
-const winstonPapertrail = new Papertrail({
-  host: `${Env.get<string>('PAPERTRAIL_HOST')}`.split('\r')[0],
-  port: Env.get<string>('PAPERTRAIL_PORT'),
-  app_name: `${Env.get<string>('NODE_ENV')}-api`,
-});
+// const winstonPapertrail = new Papertrail({
+//   host: `${Env.get<string>('PAPERTRAIL_HOST')}`.split('\r')[0],
+//   port: Env.get<string>('PAPERTRAIL_PORT'),
+//   app_name: `${Env.get<string>('NODE_ENV')}-api`,
+// });
 const loggerInfo = (env: string) => {
   let logger;
   switch (env) {
@@ -54,7 +54,6 @@ const loggerInfo = (env: string) => {
         transports: [
           infoLogRotationTransport,
           errorLogRotationTransport,
-          winstonPapertrail,
         ],
         exitOnError: false,
       });
