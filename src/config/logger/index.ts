@@ -51,10 +51,7 @@ const loggerInfo = (env: string) => {
       logger = winston.createLogger({
         level: 'info',
         format: logFormat,
-        transports: [
-          infoLogRotationTransport,
-          errorLogRotationTransport,
-        ],
+        transports: [infoLogRotationTransport, errorLogRotationTransport],
         exitOnError: false,
       });
       break;
