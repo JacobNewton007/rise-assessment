@@ -4,7 +4,7 @@ import { envValidatorSchema } from './shared/validators/env-validator';
 import Env from './shared/utils/env';
 import Logger from './config/logger';
 import { connectDB } from './config/database';
-import configureSessionStore from './config/session-store';
+// import configureSessionStore from './config/session-store';
 import app from './config/express';
 import { AppEnv } from './shared/enums';
 // import Swagger from './config/swagger';
