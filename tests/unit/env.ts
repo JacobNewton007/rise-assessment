@@ -12,8 +12,6 @@ describe('Env Class', () => {
       .required(),
     PORT: Joi.number().default(3000),
     DATABASE_URL: Joi.string().required(),
-    PAPERTRAIL_HOST: Joi.string().required(),
-    PAPERTRAIL_PORT: Joi.string().required(),
     REDIS_SESSION_STORE_URL: Joi.string(),
     SWAGGER_ROUTE: Joi.string().default('/api/docs'),
     JWT_SECRET: Joi.string(),
