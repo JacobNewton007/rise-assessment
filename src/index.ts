@@ -41,5 +41,5 @@ async function main(app: Express): Promise<void> {
 }
 
 main(app).catch((err) => {
-  console.error(">>>>>>>>>>>>>>>>>>>>>>", err);
+  console.error('>>>>>>>>>>>>>>>>>>>>>>', err);
 });
